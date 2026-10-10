@@ -1,0 +1,28 @@
+import {test,expect} from '@playwright/test';
+import ExcelJS from 'exceljs';
+import Papa from 'papaparse';
+import {PDFDocument} from 'pdf-lib';
+import {readFile} from 'node:fs/promises';
+const file={name:'stores.csv',mimeType:'text/csv',buffer:Buffer.from('店舗,売上,数量\nA,100,2\nA,200,3\nB,50,1\n')};
+async function setup(page:any){await page.goto('/');await page.locator('#inputs').setInputFiles(file);await page.locator('#next').click();await page.locator('#edit-fields').click();await page.locator('[data-kind="groups"] [data-key="column"]').selectOption('店舗');await page.locator('[data-kind="metrics"][data-index="0"] [data-key="column"]').selectOption('売上');await page.locator('[data-kind="metrics"][data-index="0"] [data-key="label"]').fill('売上合計');await page.locator('#add-metric').click();await page.locator('[data-kind="metrics"][data-index="2"] [data-key="column"]').selectOption('数量');await page.locator('[data-kind="metrics"][data-index="2"] [data-key="label"]').fill('数量合計');await page.locator('#apply-fields').click();await page.locator('#run').click();await expect(page.locator('#result-table')).toContainText('数量合計');}
+test('flexible multi-metric outputs share values; saved v2 reruns and reconfirms',async({page})=>{
+ test.setTimeout(60000);
+ await setup(page);await expect(page.locator('#result-table')).toContainText('300.00');await page.locator('#confirm').check();
+ for(const format of ['xlsx','csv','pdf']){
+  await page.locator('#export-format').selectOption(format);const pending=page.waitForEvent('download');await page.locator('#download').click();const download=await pending;const bytes=await readFile((await download.path())!);
+  if(format==='xlsx'){const w=new ExcelJS.Workbook();await w.xlsx.load(bytes as any);expect(w.getWorksheet('Result')!.getRow(2).values).toEqual([undefined,'A',300,2,5]);expect(w.getWorksheet('Result')!.getRow(2).getCell(3).numFmt).toBeUndefined();expect(w.getWorksheet('Summary')!.getRow(2).getCell(2).value).toBe(350);}
+  if(format==='csv'){expect(Papa.parse(bytes.toString('utf8').replace(/^\uFEFF/,''),{skipEmptyLines:true}).data).toContainEqual(['A','300','2','5']);}
+  if(format==='pdf'){expect((await PDFDocument.load(bytes)).getPageCount()).toBeGreaterThanOrEqual(1);expect(bytes.subarray(0,4).toString()).toBe('%PDF');}
+ }
+ await page.locator('#save-job').click();await page.locator('#job-name').fill('複数項目');await page.locator('#save-new').click();await expect(page.locator('#save-dialog')).not.toBeVisible();await page.reload();await page.locator('#saved-jobs').click();await page.locator('[data-job]').click();await page.locator('#inputs').setInputFiles(file);await page.locator('#run').click();await expect(page.locator('#result-table')).toContainText('数量合計');await expect(page.locator('#download')).toBeDisabled();
+});
+test('different header names require explicit mapping; source columns preserved',async({page})=>{
+ await page.goto('/');await page.locator('#inputs').setInputFiles([file,{name:'other.csv',mimeType:'text/csv',buffer:Buffer.from('拠点,金額,個数\nC,400,4\n')}]);await page.locator('#next').click();await page.locator('#map-columns').click();for(const [i,column] of [[0,'店舗'],[1,'売上'],[2,'数量']] as const)await page.locator(`[data-source="1"][data-column="${i}"]`).selectOption(column);await page.locator('#apply-mapping').click();await page.locator('#group').selectOption('店舗');await page.locator('#amount').selectOption('売上');await page.locator('#run').click();await expect(page.locator('#comparison')).toContainText('750.00');
+});
+test('mocked flexible AI requires review and voice transcript never auto-sends',async({page})=>{
+ await page.addInitScript(()=>{(window as any).SpeechRecognition=class {lang='';continuous=false;interimResults=false;onresult:any;onend:any;onerror:any;start(){(window as any).__recognition=this;}abort(){this.onend?.();}stop(){this.onend?.();}};});
+ await page.goto('/');await page.locator('#inputs').setInputFiles(file);await page.locator('#next').click();let calls=0;await page.route('**/api/ai/propose',route=>{calls++;return route.fulfill({json:{answer:{kind:'flexible',groupFieldIds:['field_0'],metrics:[{fieldId:'field_1',operation:'sum',label:'売上'},{fieldId:'field_2',operation:'sum',label:'数量'}],filter:null,explanation:'テスト応答'}}});});
+ await page.locator('#open-ai').click();page.once('dialog',d=>d.accept());await page.locator('#voice').click();await page.evaluate(()=>{const r=(window as any).__recognition;r.onresult({results:[{isFinal:true,0:{transcript:'店舗ごとに売上と数量を合計'}}]});r.onend();});await expect(page.locator('#ai-instruction')).toHaveValue('店舗ごとに売上と数量を合計');expect(calls).toBe(0);await page.locator('#ai-consent').check();await page.locator('#request-ai').click();await expect(page.locator('#ai-review')).toBeVisible();await expect(page.locator('#output')).not.toBeVisible();await page.locator('#apply-ai').click();await page.locator('#run').click();await expect(page.locator('#result-table')).toContainText('数量');await expect(page.locator('#download')).toBeDisabled();
+});
+
+test('numeric grouping IDs keep their appearance and prototype header names can be mapped',async({page})=>{await page.goto('/');await page.locator('#inputs').setInputFiles({name:'ids.csv',mimeType:'text/csv',buffer:Buffer.from('__proto__,売上\n123,10\n')});await page.locator('#next').click();await page.locator('#map-columns').click();await page.locator('#apply-mapping').click();await page.locator('#group').selectOption('__proto__');await page.locator('#amount').selectOption('売上');await page.locator('#edit-fields').click();await page.locator('#apply-fields').click();await page.locator('#run').click();await expect(page.locator('#result-table')).toContainText('123');await expect(page.locator('#result-table')).not.toContainText('123.00');});

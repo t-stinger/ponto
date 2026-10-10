@@ -1,0 +1,37 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
+import assert from 'node:assert/strict';
+import ExcelJS from 'exceljs';
+import { readCsv, readXlsx, exportXlsx } from '../src/io/tables.ts';
+import { aggregate, fixedRecipe } from '../src/domain/aggregate.ts';
+const root = new URL('../', import.meta.url);
+const names = ['input-a.csv','input-b.csv'];
+const files = await Promise.all(names.map(n => readFile(new URL(`technical-preparation-2026-10-09/fixtures/${n}`,root))));
+const hash = (b: Uint8Array) => createHash('sha256').update(b).digest('hex');
+const before = files.map(hash);
+const start = performance.now();
+const tables = files.map((b,i) => readCsv(b,names[i]));
+await mkdir(new URL('fixtures/',root),{recursive:true});
+const xlsxTables = await Promise.all(tables.map(async (t,i) => {
+ const bytes = await exportXlsx(t.headers,t.rows);
+ await writeFile(new URL(`fixtures/input-${i+1}.xlsx`,root),bytes);
+ return readXlsx(bytes, `input-${i+1}.xlsx`, 'Result');
+}));
+const result = aggregate(xlsxTables,fixedRecipe);
+const bytes = await exportXlsx(result.headers,result.rows);
+// Display formatting is explicit; the values remain numbers, not formula cells.
+const book=new ExcelJS.Workbook();await book.xlsx.load(bytes as unknown as ExcelJS.Buffer);
+book.getWorksheet('Result')!.getColumn(2).numFmt='0.00';
+const finalBytes=new Uint8Array(await book.xlsx.writeBuffer());
+const check = await readXlsx(finalBytes,'core-result.xlsx','Result');
+const expected=JSON.parse((await readFile(new URL('technical-preparation-2026-10-09/fixtures/expected.json',root))).toString());
+assert.deepEqual(check.rows,expected.initial.rows.map(([g,s,n]:[string,string,number])=>[g,Number(s),n]));
+assert.deepEqual(check.headers,result.headers);
+const reread=await Promise.all(names.map(n=>readFile(new URL(`technical-preparation-2026-10-09/fixtures/${n}`,root))));
+assert.deepEqual(reread.map(hash),before);
+await mkdir(new URL('evidence/',root),{recursive:true});
+await writeFile(new URL('evidence/core-result.xlsx',root),finalBytes);
+const report={stage:'Node technical probe only',node:process.version,recipe:fixedRecipe,result,output:'evidence/core-result.xlsx',roundtripVerified:true,originalHashesUnchanged:true,elapsedMs:Math.round(performance.now()-start),browserVerified:false,aiUsed:false,dateCellsSupported:false};
+await writeFile(new URL('evidence/core-result.json',root),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

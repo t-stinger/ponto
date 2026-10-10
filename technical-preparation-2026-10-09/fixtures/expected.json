@@ -1,0 +1,43 @@
+{
+  "basis": "手計算で独立に定めた期待値。製品実行結果から生成していない。架空データ。",
+  "initial": {
+    "rows": [
+      [
+        "北",
+        "120.30",
+        2
+      ],
+      [
+        "南",
+        "10.00",
+        1
+      ]
+    ],
+    "input": 4,
+    "accepted": 3,
+    "excluded": 1,
+    "unprocessed": 0,
+    "output": 2
+  },
+  "next": {
+    "rows": [
+      [
+        "北",
+        "60.00",
+        1
+      ],
+      [
+        "南",
+        "0.30",
+        2
+      ]
+    ],
+    "input": 4,
+    "accepted": 3,
+    "excluded": 1,
+    "unprocessed": 0,
+    "output": 2
+  },
+  "invalid-amount": "VALUE_INVALIDで停止。完成物を出さない。",
+  "id-type": "文字列001等を保持。数値1へ変換しない。"
+}
