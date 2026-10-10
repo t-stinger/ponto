@@ -48,3 +48,6 @@ Licensing addition (v2): full distributed grants for pdf-lib/standard-fonts/upng
 
 
 License review correction — 2026-10-10: the earlier fontkit publication-blocker statement is superseded. Official @pdf-lib/fontkit 1.1.1 metadata declares MIT, identifies its author/contributor, and its README links to standard MIT terms. THIRD_PARTY_NOTICES.txt preserves this provenance, the standard terms and inherited notices without inventing a copyright year. A missing standalone LICENSE file alone is not treated as a blocker. This is not blanket rights certification. The Ponto owner license and authorization to make the repository public are still pending. A reviewed source snapshot is now stored in the private tando-sys/ponto repository; a public repository URL and video URL are still pending.
+
+
+Sharing update — 2026-10-10: the owner redirected publication to the t-stinger account. This source snapshot is licensed under MIT; see LICENSE for Ponto and THIRD_PARTY_NOTICES.txt for dependencies. The intended submission repository is https://github.com/t-stinger/ponto. Live runtime AI and microphone verification remain pending. The demonstration recorded on 2026-10-10 at 19:14 JST includes the v2 flexible metrics, column mapping, XLSX/CSV/PDF exports and next-day recipe reuse. No application-source changes followed this recording.

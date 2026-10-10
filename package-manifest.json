@@ -2,7 +2,7 @@
   "createdAt": "2026-10-10T10:29:05.095Z",
   "published": false,
   "priorGitHistoryIncluded": false,
-  "ownProjectLicense": "pending entrant review",
+  "ownProjectLicense": "MIT",
   "files": [
     {
       "file": ".env.example",
@@ -16,18 +16,18 @@
     },
     {
       "file": "README.en.md",
-      "bytes": 8936,
-      "sha256": "89f96395c51ebd7b5ea2c5e560a592f8ced459195eb10eeab5e3ae2660d48778"
+      "bytes": 9481,
+      "sha256": "2e5b701f423366823858e04534ea70535ebea4612409b510357db5d2dbcdcec2"
     },
     {
       "file": "README.md",
-      "bytes": 8936,
-      "sha256": "89f96395c51ebd7b5ea2c5e560a592f8ced459195eb10eeab5e3ae2660d48778"
+      "bytes": 9481,
+      "sha256": "2e5b701f423366823858e04534ea70535ebea4612409b510357db5d2dbcdcec2"
     },
     {
       "file": "THIRD_PARTY_NOTICES.txt",
-      "bytes": 230944,
-      "sha256": "e8492cdddf6b848313476322f68d3c599c90af8b55e9b3fbb91b580aa467eb29"
+      "bytes": 230984,
+      "sha256": "c256a67b13d6331e9eb9502039dc6317425d62c508e353a870805f5b12028a87"
     },
     {
       "file": "devpost/app-map.html",
@@ -36,8 +36,8 @@
     },
     {
       "file": "devpost/checklist.md",
-      "bytes": 7658,
-      "sha256": "881d403447518cd9a9c3e18eaec6540c46e4d9734905048722049745eaf2d5bd"
+      "bytes": 8203,
+      "sha256": "2fcabeb8e38763141960418d031fdcafb157a46bbe479c41f604a88248075751"
     },
     {
       "file": "devpost/prd.md",
@@ -51,8 +51,8 @@
     },
     {
       "file": "devpost/spec.md",
-      "bytes": 9175,
-      "sha256": "b8edccf5e4b3489add460ebed2263813ad1645e76795424b445344952a2efd8b"
+      "bytes": 9720,
+      "sha256": "b499705b5e0643a2c4a0d61b5781c2052e2f952546c0c8801201666d8e3fa9a5"
     },
     {
       "file": "devpost/technical-verification.md",
@@ -86,13 +86,13 @@
     },
     {
       "file": "package-lock.json",
-      "bytes": 80088,
-      "sha256": "8ab987842d6581b30d5d4fb242847737b0bac2afc6a8af6b6e3eed9f238d13a6"
+      "bytes": 80112,
+      "sha256": "558152d4e584b477d3d419a6c06a070c23ef4ce37613137239a9f5ae98a0a1c5"
     },
     {
       "file": "package.json",
-      "bytes": 1195,
-      "sha256": "0b1fe527254d4d95055b532ac3118aa94f3e5eefbbcddc793f93fe6b8cec8ef5"
+      "bytes": 1215,
+      "sha256": "7081efa1d9eea1137909408e82781d9eb5118e96c77f6fdbd2722241cb64e9db"
     },
     {
       "file": "playwright.config.ts",
@@ -278,6 +278,12 @@
       "file": "vite.config.ts",
       "bytes": 376,
       "sha256": "eefb907c0af032c6b5a367674c824aa24603ae6ff5bc5841bbda98b0935825fe"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 1065,
+      "sha256": "a043a3a69ec81df8a365ab42a17c694014cada2f924ead91beed8a4825369701"
     }
-  ]
+  ],
+  "intendedRepository": "https://github.com/t-stinger/ponto"
 }

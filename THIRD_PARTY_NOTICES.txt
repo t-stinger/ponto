@@ -1,5 +1,5 @@
 Third-party notices for the locked production dependencies.
-The Ponto project license remains pending owner approval.
+Ponto itself is licensed under MIT; see LICENSE. Third-party materials retain their own licenses.
 
 
 ========================================================================
