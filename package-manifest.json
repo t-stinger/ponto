@@ -16,18 +16,18 @@
     },
     {
       "file": "README.en.md",
-      "bytes": 8222,
-      "sha256": "3b8894b8a3ffbda74abd51b4d86cdcae98da3624963d8b560313b5676d72ed5c"
+      "bytes": 8936,
+      "sha256": "89f96395c51ebd7b5ea2c5e560a592f8ced459195eb10eeab5e3ae2660d48778"
     },
     {
       "file": "README.md",
-      "bytes": 8222,
-      "sha256": "3b8894b8a3ffbda74abd51b4d86cdcae98da3624963d8b560313b5676d72ed5c"
+      "bytes": 8936,
+      "sha256": "89f96395c51ebd7b5ea2c5e560a592f8ced459195eb10eeab5e3ae2660d48778"
     },
     {
       "file": "THIRD_PARTY_NOTICES.txt",
-      "bytes": 229408,
-      "sha256": "76b41031a830cd49fdb610f244cdf826ce8243275cfa0b5c7fdec1f23fc26cd4"
+      "bytes": 230944,
+      "sha256": "e8492cdddf6b848313476322f68d3c599c90af8b55e9b3fbb91b580aa467eb29"
     },
     {
       "file": "devpost/app-map.html",
@@ -36,8 +36,8 @@
     },
     {
       "file": "devpost/checklist.md",
-      "bytes": 6944,
-      "sha256": "2991da1d6fb5facd9ee2643cfef71193a04170e01b49e42cf830e83a2be4736c"
+      "bytes": 7658,
+      "sha256": "881d403447518cd9a9c3e18eaec6540c46e4d9734905048722049745eaf2d5bd"
     },
     {
       "file": "devpost/prd.md",
@@ -51,8 +51,8 @@
     },
     {
       "file": "devpost/spec.md",
-      "bytes": 8461,
-      "sha256": "804df76c23b24068c079cbf0044b30d2f3f4b8731208b0134040e7197677a9ac"
+      "bytes": 9175,
+      "sha256": "b8edccf5e4b3489add460ebed2263813ad1645e76795424b445344952a2efd8b"
     },
     {
       "file": "devpost/technical-verification.md",

@@ -4366,7 +4366,30 @@ node_modules/@pdf-lib/fontkit 1.1.1
 Declared license: MIT
 Package repository: https://github.com/Hopding/fontkit
 Distributed README: https://choosealicense.com/licenses/mit/ (declaration only)
-UNRESOLVED: distribution and official repository inspected on 2026-10-10 contain no package LICENSE grant text. No release-specific grant provenance was verified. This declaration is not substituted with an invented copyright/grant. External release requires review. Bundled inherited notices follow; they do not license the fontkit package as a whole.
+Reviewed 2026-10-10: official package.json declares SPDX MIT and lists Andrew Dillon as author and Devon Govett as contributor. The distributed README links to the standard MIT license. No package-specific copyright year or standalone LICENSE file was found. Author metadata is preserved as attribution, not invented as a copyright notice. Standard grant text below follows the README-linked license; it was not copied from a package LICENSE file.
+Metadata source: https://registry.npmjs.org/@pdf-lib/fontkit/1.1.1
+Standard text source referenced by the package README: https://choosealicense.com/licenses/mit/
+MIT grant text (package-specific copyright notice not available):
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Bundled inherited notices follow. The lack of a standalone LICENSE file alone is not treated as a publication blocker; this record is not a guarantee of all intellectual-property rights.
 
 Bundled string_decoder notice (dist/fontkit.es.js)
   // Copyright Joyent, Inc. and other Node contributors.
