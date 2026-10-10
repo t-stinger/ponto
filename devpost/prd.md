@@ -47,3 +47,10 @@ Automated fictional data verifies arithmetic and export. [Validation plan](../ev
 
 ## Sharing
 Required official repository/video links and human-authored submission fields are outstanding. Localhost cannot serve as a public judging URL. Publication and submission need explicit user approval. [Checklist](checklist.md).
+# Evidence refinement — 2026-10-10
+
+The reported audience is a company owner reviewing five stores daily. Their existing Excel formulas calculate automatically, but figures are manually re-entered; the entrant reports about two hours and confirms that CSV/Excel exports are available. This supports testing import instead of re-entry, not claiming a measured two-hour saving.
+
+Additional acceptance: Excel export includes source-by-source input/accepted/excluded counts and metric values, plus the effective calculation conditions. Separate identical filenames by input number; do not invent missing-store checks or transactions deduplication. Validate exported records by re-reading them. The original Result/Summary and CSV/PDF values remain consistent.
+
+Measure initial setup, next-day reuse, changed-column repair, correct output and human time separately. Compare configured Power Query fairly; major aggregation features already exist there. Competition-facing prose must distinguish reported baseline, fictional-data validation and measured human outcomes.

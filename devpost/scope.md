@@ -41,3 +41,8 @@ No scheduling, email, cloud sync, native mobile app, arbitrary formulas, joins, 
 
 ## Approval and evidence
 Implementation approval: 2026-10-09. Subsequent user requests authorize the current name, simplified UI, reference-upload removal, PC layout and Codex direction. The sales scenario was supplied on 2026-10-10. No authority to submit or contact outsiders. [PRD](prd.md), [spec](spec.md), [checklist](checklist.md).
+
+## Award evidence update — 2026-10-10
+The entrant reports that daily sales from five stores take about two hours: spreadsheet formulas perform the calculation, but the source figures are typed manually. They confirmed that CSV/XLSX source exports are available. This is a reported workflow, not an observed timing study. The target is to reduce re-entry by importing those exports and explicitly reviewing mappings and conditions. Do not equate processing latency with end-to-end business time saved.
+
+Excel exports now add input-level row counts, metric summaries and effective calculation conditions for checking the result's basis. This does not prove that every expected store submitted, that transactions are unique, or that accounting definitions are correct. CSV/PDF still export only the result table. The existing public repository and demo predate this change and require reconciliation before final submission.

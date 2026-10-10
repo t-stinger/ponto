@@ -1,6 +1,6 @@
 {
   "createdAt": "2026-10-10T10:29:05.095Z",
-  "published": false,
+  "published": true,
   "priorGitHistoryIncluded": false,
   "ownProjectLicense": "MIT",
   "files": [
@@ -16,13 +16,13 @@
     },
     {
       "file": "README.en.md",
-      "bytes": 9481,
-      "sha256": "2e5b701f423366823858e04534ea70535ebea4612409b510357db5d2dbcdcec2"
+      "bytes": 9814,
+      "sha256": "0ed2fa2261539e3e33de7355cf9806f2dd983f8f5bc0128efab6d4098aab09f9"
     },
     {
       "file": "README.md",
-      "bytes": 9481,
-      "sha256": "2e5b701f423366823858e04534ea70535ebea4612409b510357db5d2dbcdcec2"
+      "bytes": 9814,
+      "sha256": "0ed2fa2261539e3e33de7355cf9806f2dd983f8f5bc0128efab6d4098aab09f9"
     },
     {
       "file": "THIRD_PARTY_NOTICES.txt",
@@ -41,18 +41,18 @@
     },
     {
       "file": "devpost/prd.md",
-      "bytes": 6253,
-      "sha256": "14fa1f7eaa6873b62a19fdf8ea19ab0a18f7bb96e268ef6e27d354c6d863b747"
+      "bytes": 7319,
+      "sha256": "7917b8b8f2a2bda4cb009b3390033788c51e468a6441d704e5828cdccfb16423"
     },
     {
       "file": "devpost/scope.md",
-      "bytes": 6006,
-      "sha256": "306e8507dedacf1f4505a62fc030f12353ec4b50316c6d1ac0e4731c11c710fe"
+      "bytes": 6931,
+      "sha256": "b2e705688e1ce062bea2a71baed6c15bdbe4c2a8cd7ce60047b0ed7c5a341357"
     },
     {
       "file": "devpost/spec.md",
-      "bytes": 9720,
-      "sha256": "b499705b5e0643a2c4a0d61b5781c2052e2f952546c0c8801201666d8e3fa9a5"
+      "bytes": 10287,
+      "sha256": "c592ba7e84982003677a11fc959aa3effdfa1ce391e41e799a647905cd3cd197"
     },
     {
       "file": "devpost/technical-verification.md",
@@ -126,8 +126,8 @@
     },
     {
       "file": "src/browser/main.ts",
-      "bytes": 47623,
-      "sha256": "a5112780672c25068dbc96775f1ce5960ae4658dd3e82da8bb08dbfb0d92de78"
+      "bytes": 47724,
+      "sha256": "16c16647c2ea2675712840845939e954e09b702dda12cb96673898313a6745f4"
     },
     {
       "file": "src/browser/style.css",
@@ -136,13 +136,13 @@
     },
     {
       "file": "src/browser/worker.ts",
-      "bytes": 2865,
-      "sha256": "8b03f9a9edce54929a8ecfc5fa431bba68c396e31a37a8a9fecdf45a81b97e14"
+      "bytes": 3408,
+      "sha256": "0967507dcb7e8a2519e4020fb40d53504b2caad075e33efbdac2d7e08e04b5c8"
     },
     {
       "file": "src/domain/aggregate.ts",
-      "bytes": 4139,
-      "sha256": "2386d95e4992c70d4727ace8bb63e3cf5f155dc66c831647aaefa574dc2df585"
+      "bytes": 5382,
+      "sha256": "e9212f879fd052b5ef4acb66b47c86f9404b3fb82698ab4001cba07e5052d0da"
     },
     {
       "file": "src/domain/compare.ts",
@@ -151,8 +151,8 @@
     },
     {
       "file": "src/domain/flexible.ts",
-      "bytes": 5393,
-      "sha256": "0e436ade75977b3e5dd72bd1ce9daab1d6143bd4c633644f284c97a02d1e34b5"
+      "bytes": 6106,
+      "sha256": "e41c0fc24e5f8a64fb0571c7fe3989b2aab9229c494d043eafa7fae16b1b2cb6"
     },
     {
       "file": "src/domain/jobs.ts",
@@ -171,8 +171,8 @@
     },
     {
       "file": "src/io/tables.ts",
-      "bytes": 7656,
-      "sha256": "1d52ed280703155845a04ab66ba58a5dc02778867116d802737242635e730dbb"
+      "bytes": 10097,
+      "sha256": "8383cbf7af2824731073233a3ccf7e3d51e0189c641ed05dc3dec9b1da7987be"
     },
     {
       "file": "src/server/ai.ts",
@@ -261,13 +261,13 @@
     },
     {
       "file": "tests/flexible.test.ts",
-      "bytes": 3732,
-      "sha256": "0581d5f432b99a119c7502c4ed83be31e34fc3e6344f5e06028e1f1c83d0254e"
+      "bytes": 4114,
+      "sha256": "06e0e7056ec946121e03a03540fd277503be827a947696bf79854db5c456c21c"
     },
     {
       "file": "tests/outputs.test.ts",
-      "bytes": 4455,
-      "sha256": "57d9af9daf0d6856f38880bc2ba9962cab13d70822900eddd2607d814fa481a9"
+      "bytes": 9665,
+      "sha256": "5fa1eedf7ae225ec39020f706b2888128dccb5bf71a07058568298bf23efe158"
     },
     {
       "file": "tsconfig.json",
@@ -285,5 +285,6 @@
       "sha256": "a043a3a69ec81df8a365ab42a17c694014cada2f924ead91beed8a4825369701"
     }
   ],
-  "intendedRepository": "https://github.com/t-stinger/ponto"
+  "intendedRepository": "https://github.com/t-stinger/ponto",
+  "updatedAt": "2026-10-10"
 }

@@ -14,3 +14,10 @@ test('saved recipes preserve legacy records and validate flexible records',()=>{
 test('flexible AI answer validates count, labels, columns and rejects code',()=>{const input=makeAiRequest(table.headers,'集計'),answer={kind:'flexible',groupFieldIds:['field_0'],metrics:[{fieldId:'field_1',operation:'sum',label:'売上合計'},{fieldId:null,operation:'count',label:'件数'}],filter:null,explanation:'店舗ごと'};assert.deepEqual(validateAiAnswer(answer,input),answer);for(const bad of [{...answer,metrics:[{fieldId:'field_99',operation:'sum',label:'合計'}]},{...answer,metrics:[{fieldId:'field_1',operation:'count',label:'件数'}]},{...answer,code:'run()'}])assert.throws(()=>validateAiAnswer(bad,input));});
 
 test('single-column count-only AI request is valid',()=>{const input=makeAiRequest(['店舗'],'全行の件数');assert.equal(input.fields.length,1);assert.equal(validateAiAnswer({kind:'flexible',groupFieldIds:[],metrics:[{fieldId:null,operation:'count',label:'件数'}],filter:null,explanation:'件数'},input).kind,'flexible');});
+
+test('source audit computes each metric from that input rather than grouped or combined values',()=>{
+ const second={...table,source:'another.csv',rows:[['A','100','完了']]};
+ const r=aggregateFlexible([table,second],recipe);
+ assert.deepEqual(r.sourceAudit!.map(s=>s.metrics.map(m=>m.value)),[[90,30,10,60,3],[100,100,100,100,1]]);
+ assert.equal(r.summaries[1].value,47.5);
+});

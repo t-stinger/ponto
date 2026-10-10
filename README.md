@@ -15,6 +15,11 @@ This supplement supersedes the fixed one-group/one-sum/Excel-only statements bel
 
 Ponto runs in a PC browser and consolidates value-only Excel/CSV tables by a selected group and numeric amount. It exports store/group totals and an overall summary. The Codex proposal API and review UI are implemented; real API access is **not configured or verified**. Imported table values are never passed to the proposal endpoint. Saved recipes stay in IndexedDB on the same browser origin; imported files/rows are not persisted.
 
+## Verification records in Excel
+Excel output also records each input's accepted/excluded rows and metrics, plus the effective calculation conditions. Input numbers distinguish identical filenames; this is not duplicate-transaction detection. Empty-input averages/minima/maxima are blank, not zero. Source-level rounded metrics need not add up to an overall figure rounded once. The blank-row counter describes rows removed by the reader, not all physical blank lines in the source CSV. CSV and PDF contain only the result table.
+
+The entrant reports about two hours for manually entering five stores' figures into a formula-based workbook, and confirms source CSV/Excel exports are available. Actual business time savings and comparative usability are not yet measured. Fictional-data tests verify arithmetic and export consistency; these do not establish human time savings.
+
 ## Run
 Requires Node.js 24 and npm. From the repository root:
 
@@ -60,6 +65,3 @@ Licensing addition (v2): full distributed grants for pdf-lib/standard-fonts/upng
 
 
 License review correction — 2026-10-10: the earlier fontkit publication-blocker statement is superseded. Official @pdf-lib/fontkit 1.1.1 metadata declares MIT, identifies its author/contributor, and its README links to standard MIT terms. THIRD_PARTY_NOTICES.txt preserves this provenance, the standard terms and inherited notices without inventing a copyright year. A missing standalone LICENSE file alone is not treated as a blocker. This is not blanket rights certification. The Ponto owner license and authorization to make the repository public are still pending. A reviewed source snapshot is now stored in the private tando-sys/ponto repository; a public repository URL and video URL are still pending.
-
-
-Sharing update — 2026-10-10: the owner redirected publication to the t-stinger account. This source snapshot is licensed under MIT; see LICENSE for Ponto and THIRD_PARTY_NOTICES.txt for dependencies. The intended submission repository is https://github.com/t-stinger/ponto. Live runtime AI and microphone verification remain pending. The demonstration recorded on 2026-10-10 at 19:14 JST includes the v2 flexible metrics, column mapping, XLSX/CSV/PDF exports and next-day recipe reuse. No application-source changes followed this recording.

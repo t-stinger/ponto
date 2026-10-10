@@ -2,10 +2,11 @@ import ExcelJS from 'exceljs';
 import Papa from 'papaparse';
 import { Unzip, UnzipInflate } from 'fflate';
 import { DataError } from './errors.ts';
+import type { SourceAudit } from '../domain/aggregate.ts';
 export { DataError } from './errors.ts';
 
 export type Cell = string | number | boolean | null;
-export type Table = { headers: string[]; rows: Cell[][]; source: string; blankRows: number };
+export type Table = { headers: string[]; rows: Cell[][]; source: string; blankRows: number; originalHeaders?: string[]; sheetName?: string };
 export function tableFromRows(rows: Cell[][], source: string): Table {
   if (!rows.length || !rows[0].length) throw new DataError('TABLE_AMBIGUOUS', `${source}: 表がありません`);
   const headers = rows[0].map(c => typeof c === 'string' ? c : '');
@@ -92,9 +93,29 @@ export async function readXlsx(bytes: Uint8Array, source: string, sheetName: str
     }
     rows.push(row);
   }
-  return tableFromRows(rows, source);
+  return {...tableFromRows(rows, source), sheetName};
 }
-export async function exportXlsx(headers: string[], rows: Cell[][], decimalPlaces?: number, summary?: {total:number;accepted:number;excluded:number;metrics?:{label:string;value:number}[]}, decimalColumns?:number[]): Promise<Uint8Array> {
+export type ExportAudit = { sources: SourceAudit[]; recipe: unknown };
+/** Source indices identify separate inputs even when filenames are identical. Empty extrema stay blank. */
+export function auditTables(audit: ExportAudit): {name: string; headers: string[]; rows: Cell[][]}[] {
+  const labels = audit.sources[0]?.metrics.map(m => `${m.label} (${m.operation})`) ?? [];
+  const sources = {
+    name: 'Sources', headers: ['入力番号','ファイル名','集計対象行数','採用行数','除外行数','読取後に除いた空行数', ...labels],
+    rows: audit.sources.map(s => [s.sourceIndex,s.source,s.input,s.accepted,s.excluded,s.blankRows,...s.metrics.map(m=>m.value)]),
+  };
+  const rows: Cell[][] = [];
+  const visit = (value: unknown, key: string) => {
+    if (Array.isArray(value)) { if (!value.length) rows.push([key,'[]']); else value.forEach((v,i)=>visit(v,`${key}[${i+1}]`)); }
+    else if (value !== null && typeof value === 'object') Object.entries(value).forEach(([k,v])=>visit(v,key ? `${key}.${k}` : k));
+    else rows.push([key,value === null ? 'なし' : String(value)]);
+  };
+  visit(audit.recipe,'');
+  rows.push(['集計値の丸め','各集計値は指定桁で個別に丸めています。ファイル別・分類別の丸め後の値を足しても、原データから求めた全体値と一致しない場合があります。']);
+  rows.push(['空行数の範囲','読み取り後の表から除いた空行数です。CSVの完全空行は読み取り時に無視されるため、ファイル内の全物理空行数ではありません。']);
+  const details={name:'SourceDetails',headers:['入力番号','ファイル名','選択シート','元列番号','元の列名','集計に使用した列名'],rows:audit.sources.flatMap(s=>s.normalizedHeaders.map((h,i)=>[s.sourceIndex,s.source,s.sheetName??'',i+1,s.originalHeaders[i],h]))};
+  return [sources,{name:'Conditions',headers:['条件','設定値'],rows},details];
+}
+export async function exportXlsx(headers: string[], rows: Cell[][], decimalPlaces?: number, summary?: {total:number;accepted:number;excluded:number;metrics?:{label:string;value:number}[]}, decimalColumns?:number[], audit?:ExportAudit): Promise<Uint8Array> {
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet('Result');
   sheet.addRow(headers); rows.forEach(row => sheet.addRow(row));
@@ -111,6 +132,11 @@ export async function exportXlsx(headers: string[], rows: Cell[][], decimalPlace
     totals.addRow(['項目','値']);if(summary.metrics)summary.metrics.forEach(m=>totals.addRow(['全体：'+m.label,m.value]));else totals.addRow(['全体合計',summary.total]);totals.addRow(['採用行数',summary.accepted]);totals.addRow(['除外行数',summary.excluded]);
     if(summary.metrics)summary.metrics.forEach((m,i)=>{totals.getCell(i+2,2).numFmt=(decimalColumns??[]).includes(headers.length-summary.metrics!.length+i)&&decimalPlaces?'0.'+'0'.repeat(decimalPlaces):'0';});else totals.getCell('B2').numFmt=decimalPlaces?'0.'+'0'.repeat(decimalPlaces):'0';
     totals.getRow(1).font={bold:true};totals.columns.forEach(col=>{col.width=20;});
+  }
+  if(audit)for(const table of auditTables(audit)){
+    const auditSheet=workbook.addWorksheet(table.name);
+    auditSheet.addRow(table.headers);table.rows.forEach(row=>auditSheet.addRow(row));
+    auditSheet.getRow(1).font={bold:true};auditSheet.views=[{state:'frozen',ySplit:1}];auditSheet.columns.forEach(col=>{col.width=24;});
   }
   return new Uint8Array(await workbook.xlsx.writeBuffer());
 }

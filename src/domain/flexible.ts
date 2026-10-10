@@ -2,7 +2,7 @@ import { Decimal } from 'decimal.js';
 import { z } from 'zod';
 import { DataError } from '../io/errors.ts';
 import type { Cell, Table } from '../io/tables.ts';
-import type { Result } from './aggregate.ts';
+import type { Result, SourceAudit } from './aggregate.ts';
 export const MetricOperation = z.enum(['sum','count','average','min','max']);
 export const FlexibleRecipe = z.object({
  version:z.literal(2),
@@ -39,7 +39,9 @@ export function aggregateFlexible(tables:Table[],unknownRecipe:unknown):Flexible
  if(!tables.length||tables.length>10)throw new DataError('INPUT_LIMIT','ファイル数が範囲外です');
  const groups=new Map<string,{keys:Cell[];states:State[]}>(),totals=recipe.metrics.map(state);
  let input=0,accepted=0,excluded=0;
- for(const table of tables){
+ const sourceAudit:SourceAudit[]=[];
+ for(const [sourceIndex,table] of tables.entries()){
+  const sourceStates=recipe.metrics.map(state);let sourceAccepted=0,sourceExcluded=0;
   const headers=table.headers.map(s=>s.normalize('NFC').trim());
   const index=(name:string)=>{const i=headers.indexOf(name.normalize('NFC').trim());if(i<0)throw new DataError('BINDING_REQUIRED',`${table.source}: 必要な列「${name}」がありません`);return i;};
   const gi=recipe.groups.map(g=>index(g.column)),mi=recipe.metrics.map(m=>m.operation==='count'?-1:index(m.column)),fi=recipe.filter?index(recipe.filter.column):-1;
@@ -47,13 +49,14 @@ export function aggregateFlexible(tables:Table[],unknownRecipe:unknown):Flexible
    if(++input>5000)throw new DataError('INPUT_LIMIT','全体で5000行を超えています');
    const keys=gi.map(i=>{const v=row[i];if(v===null||v===undefined||v===''||typeof v==='number'&&!Number.isFinite(v))throw new DataError('VALUE_INVALID',`${table.source}: 分類に空欄や不正な値があります`);return v;});
    const numbers=mi.map(i=>i<0?undefined:numeric(row[i],table.source));
-   if(recipe.filter){const f=row[fi];if(f===null||f===undefined||f==='')throw new DataError('VALUE_INVALID',`${table.source}: 除外条件の列に空欄があります`);if(String(f)===recipe.filter.excludedValue){excluded++;continue;}}
-   accepted++;const key=JSON.stringify(keys),entry=groups.get(key)??{keys,states:recipe.metrics.map(state)};
-   numbers.forEach((n,i)=>{add(entry.states[i],n);add(totals[i],n);});groups.set(key,entry);
+   if(recipe.filter){const f=row[fi];if(f===null||f===undefined||f==='')throw new DataError('VALUE_INVALID',`${table.source}: 除外条件の列に空欄があります`);if(String(f)===recipe.filter.excludedValue){excluded++;sourceExcluded++;continue;}}
+   accepted++;sourceAccepted++;const key=JSON.stringify(keys),entry=groups.get(key)??{keys,states:recipe.metrics.map(state)};
+   numbers.forEach((n,i)=>{add(entry.states[i],n);add(totals[i],n);add(sourceStates[i],n);});groups.set(key,entry);
   }
+  sourceAudit.push({sourceIndex:sourceIndex+1,source:table.source,originalHeaders:[...(table.originalHeaders??table.headers)],normalizedHeaders:headers,sheetName:table.sheetName,input:table.rows.length,accepted:sourceAccepted,excluded:sourceExcluded,blankRows:table.blankRows,metrics:recipe.metrics.map((m,i)=>({label:m.label,operation:m.operation,value:!sourceAccepted&&['average','min','max'].includes(m.operation)?null:value(sourceStates[i],m.operation,recipe.decimalPlaces)}))});
  }
  const summaries=recipe.metrics.map((m,i)=>({label:m.label,value:value(totals[i],m.operation,recipe.decimalPlaces)}));
  const rows:Cell[][]=[...groups.values()].map(g=>[...g.keys,...recipe.metrics.map((m,i)=>value(g.states[i],m.operation,recipe.decimalPlaces))]);
  const firstSum=recipe.metrics.findIndex(m=>m.operation==='sum');
- return {headers:[...recipe.groups,...recipe.metrics].map(x=>x.label),rows,summaries,grandTotal:firstSum<0?0:summaries[firstSum].value,groupCount:groups.size,counts:{input,accepted,excluded,unprocessed:0,output:rows.length}};
+ return {sourceAudit,headers:[...recipe.groups,...recipe.metrics].map(x=>x.label),rows,summaries,grandTotal:firstSum<0?0:summaries[firstSum].value,groupCount:groups.size,counts:{input,accepted,excluded,unprocessed:0,output:rows.length}};
 }
