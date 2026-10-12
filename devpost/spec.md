@@ -4,6 +4,19 @@ version: '2.0'
 updated: '2026-10-10'
 status: implemented-locally-verified-live-ai-and-voice-pending
 ---
+## Current submission status — 2026-10-12
+
+This status supersedes older statements below about unpublished code/video, an unselected Ponto license, and fixed-field exports. Those statements are historical records.
+
+- Public source: https://github.com/t-stinger/ponto ; Ponto is MIT licensed (LICENSE). Dependency notices are in THIRD_PARTY_NOTICES.txt.
+- Public final demo: https://youtu.be/li5nsGHeCJ0 ; 72.28 seconds, with 15 published English action captions. It shows manual aggregation, three exports, saving reviewed conditions, and verification records rendered from the actual downloaded workbook, not native Excel footage.
+- Reproduction data: fixtures/final-demo (three CSV and two value-only XLSX files). Expected: 3,933,030 integer yen, 945 accepted rows, 3,176 items; 55 cancelled rows excluded.
+- The selected submission is the implemented manual workflow. Live runtime AI and microphone recognition remain unconfigured/unverified optional paths; they are not demonstrated. No API key is required for manual aggregation.
+- Excel has Result, Summary, Sources, Conditions, and SourceDetails worksheets. CSV and PDF contain the result table.
+- Devpost remains DRAFT, with the final video link saved. No final submission has been sent. Human time savings and competitive superiority are unmeasured.
+- Learner-written submission copy, final learning reflection/checkpoint evidence, eligibility declarations and final terms/submission approval remain unresolved. Publishing links is not certification of all Skill Pack stages.
+
+
 ## v2 implemented supplement — 2026-10-10
 This supplement supersedes the fixed one-group/one-sum/Excel-only statements below. Expansion code is implemented; type checking, 51 core tests, 20 browser tests and the production build pass. Earlier test counts refer to v1, not evidence that this expansion passes.
 
