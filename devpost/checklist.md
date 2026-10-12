@@ -9,8 +9,8 @@ This status supersedes older statements below about unpublished code/video, an u
 - Reproduction data: fixtures/final-demo (three CSV and two value-only XLSX files). Expected: 3,933,030 integer yen, 945 accepted rows, 3,176 items; 55 cancelled rows excluded.
 - The selected submission is the implemented manual workflow. Live runtime AI and microphone recognition remain unconfigured/unverified optional paths; they are not demonstrated. No API key is required for manual aggregation.
 - Excel has Result, Summary, Sources, Conditions, and SourceDetails worksheets. CSV and PDF contain the result table.
-- Devpost remains DRAFT, with the final video link saved. No final submission has been sent. Human time savings and competitive superiority are unmeasured.
-- Learner-written submission copy, final learning reflection/checkpoint evidence, eligibility declarations and final terms/submission approval remain unresolved. Publishing links is not certification of all Skill Pack stages.
+- Submitted to Build With AI: Basics on 2026-10-12 with entrant consent: https://devpost.com/software/ponto . Devpost displayed “Project submitted!” and the correct competition. Human time savings and competitive superiority are unmeasured.
+- Entrant approved the submitted content, eligibility declarations, terms and public information scope. Submission-copy authorship and final learner reflection/checkpoint evidence remain unresolved; successful submission is not certification of all Skill Pack stages.
 
 
 ## v2 implemented supplement — 2026-10-10
