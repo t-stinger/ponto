@@ -283,8 +283,38 @@
       "file": "LICENSE",
       "bytes": 1065,
       "sha256": "a043a3a69ec81df8a365ab42a17c694014cada2f924ead91beed8a4825369701"
+    },
+    {
+      "file": "fixtures/final-demo/README.md",
+      "bytes": 514,
+      "sha256": "eb98ef8f0b1cdba991c69fe25634fbf8d7588d265810f0ac1305a4365b5cdb17"
+    },
+    {
+      "file": "fixtures/final-demo/store-1.csv",
+      "bytes": 2755,
+      "sha256": "5bb6cb5edbb24c6abbd5fc67203571f4eaad6879207812b8811cdd34b9d4f506"
+    },
+    {
+      "file": "fixtures/final-demo/store-2.xlsx",
+      "bytes": 6909,
+      "sha256": "99d63b406124de6a492de4dadcd7be0bab2a48c16a87dac7f57c0fbd04b1fa9c"
+    },
+    {
+      "file": "fixtures/final-demo/store-3.csv",
+      "bytes": 5107,
+      "sha256": "0cd4a166a7dcd573e4ba6c8aa2d5501ac4b69e532507a9a4f834988090339700"
+    },
+    {
+      "file": "fixtures/final-demo/store-4.xlsx",
+      "bytes": 6538,
+      "sha256": "4f71bfafac87c0460debbac565baa944bd524bc6ef205151df8ddeff93edaf0a"
+    },
+    {
+      "file": "fixtures/final-demo/store-5.csv",
+      "bytes": 7389,
+      "sha256": "88e99ebbce57ee49d4c7f9c41392df0d67e7eec6d2f7b6637ec216d132dc04ca"
     }
   ],
   "intendedRepository": "https://github.com/t-stinger/ponto",
-  "updatedAt": "2026-10-10"
+  "updatedAt": "2026-10-12"
 }
